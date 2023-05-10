@@ -1,4 +1,5 @@
 const modal = document.getElementById('modal');
+const host = 'http://localhost:8080/products';
 
 const showAddModal = () => {
     modal.dataset.formType = 'add';
@@ -47,7 +48,9 @@ form.addEventListener('submit', (event) => {
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const createProduct = (product) => {
     axios.request({
-        url: '',
+        url: host,
+        method: 'post',
+        data: product
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
@@ -57,10 +60,10 @@ const createProduct = (product) => {
 
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const updateProduct = (product) => {
-    const { id } = product;
-
     axios.request({
-        url: '',
+        url: `${host}/${product.id}`,
+        method: 'put',
+        data: product
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
@@ -71,7 +74,8 @@ const updateProduct = (product) => {
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const deleteProduct = (id) => {
     axios.request({
-        url: '',
+        url: `${host}/${id}`,
+        method: 'delete'
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
