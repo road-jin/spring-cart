@@ -38,11 +38,13 @@ public class CartItemService {
     public int remove(CartItemRemoveData cartItemRemoveData) {
         CartItem cartItem = cartItemRepository.findById(cartItemRemoveData.getId())
             .orElseThrow(CartItemNotFoundException::new);
+        validateOwner(cartItemRemoveData, cartItem);
+        return cartItemRepository.delete(cartItemRemoveData.getId());
+    }
 
+    private void validateOwner(CartItemRemoveData cartItemRemoveData, CartItem cartItem) {
         if (!cartItem.verifyOwner(cartItemRemoveData.getMemberId())) {
             throw new UnauthorizedException();
         }
-
-        return cartItemRepository.delete(cartItemRemoveData.getId());
     }
 }
