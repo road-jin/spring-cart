@@ -3,6 +3,7 @@ package cart.cartitem.infrastrucure;
 import cart.cartitem.domain.CartItem;
 import cart.cartitem.domain.CartItemRepository;
 import cart.cartitem.domain.CartItemWithProduct;
+import cart.product.domain.Product;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -78,10 +79,11 @@ public class JdbcCartItemRepository implements CartItemRepository {
 
     private RowMapper<CartItemWithProduct> cartItemWithProductRowMapper = (rs, rowNum) ->
         new CartItemWithProduct(rs.getLong("id"),
-            rs.getLong("product_id"),
-            rs.getString("product_name"),
-            rs.getString("product_image"),
-            rs.getLong("product_price"),
+            new Product(
+                rs.getLong("product_id"),
+                rs.getString("product_name"),
+                rs.getString("product_image"),
+                rs.getLong("product_price")),
             rs.getLong("owner_id"));
 
     private RowMapper<CartItem> cartItemRowMapper = (rs, rowNum) ->

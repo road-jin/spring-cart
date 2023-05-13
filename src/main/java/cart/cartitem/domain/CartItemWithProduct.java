@@ -1,23 +1,17 @@
 package cart.cartitem.domain;
 
+import cart.product.domain.Product;
 import java.util.Objects;
 
 public class CartItemWithProduct {
 
     private final Long id;
-    private final Long productId;
-    private final String productName;
-    private final String productImage;
-    private final Long productPrice;
+    private final Product product;
     private final Long ownerId;
 
-    public CartItemWithProduct(Long id, Long productId, String productName, String productImage,
-        Long productPrice, Long ownerId) {
+    public CartItemWithProduct(Long id, Product product, Long ownerId) {
         this.id = id;
-        this.productId = productId;
-        this.productName = productName;
-        this.productImage = productImage;
-        this.productPrice = productPrice;
+        this.product = product;
         this.ownerId = ownerId;
     }
 
@@ -25,20 +19,24 @@ public class CartItemWithProduct {
         return id;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
     public Long getProductId() {
-        return productId;
+        return product.getId();
     }
 
     public String getProductName() {
-        return productName;
+        return product.getName();
     }
 
     public String getProductImage() {
-        return productImage;
+        return product.getImage();
     }
 
     public Long getProductPrice() {
-        return productPrice;
+        return product.getPrice();
     }
 
     public Long getOwnerId() {
