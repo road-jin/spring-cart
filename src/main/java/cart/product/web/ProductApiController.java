@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/products")
 @RestController
-public class ProductController {
+public class ProductApiController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductApiController(ProductService productService) {
         this.productService = productService;
     }
 
@@ -36,15 +36,15 @@ public class ProductController {
         return ResponseEntity.ok(ProductResponse.from(productService.create(productCreateRequest.toProductCreateData())));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> update(@PathVariable Long id, @RequestBody @Valid ProductUpdateRequest productUpdateRequest) {
-        productUpdateRequest.injectId(id);
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductResponse> update(@PathVariable Long productId, @RequestBody @Valid ProductUpdateRequest productUpdateRequest) {
+        productUpdateRequest.injectId(productId);
         return ResponseEntity.ok(ProductResponse.from(productService.update(productUpdateRequest.toProductUpdateData())));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        productService.delete(id);
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> delete(@PathVariable Long productId) {
+        productService.delete(productId);
         return ResponseEntity.noContent().build();
     }
 }

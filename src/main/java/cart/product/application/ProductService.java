@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class ProductService {
 
@@ -23,12 +24,10 @@ public class ProductService {
         return ProductInformation.from(productRepository.findAll());
     }
 
-    @Transactional
     public ProductInformation create(ProductCreateData productCreateData) {
         return ProductInformation.from(productRepository.save(productCreateData.toProduct()));
     }
 
-    @Transactional
     public ProductInformation update(ProductUpdateData productUpdateData) {
         if (!productRepository.existById(productUpdateData.getId())) {
             throw new ProductNotFoundException();
@@ -37,12 +36,7 @@ public class ProductService {
         return ProductInformation.from(productRepository.update(productUpdateData.toProduct()));
     }
 
-    @Transactional
-    public void delete(Long id) {
-        if (!productRepository.existById(id)) {
-            throw new ProductNotFoundException();
-        }
-
-        productRepository.delete(id);
+    public int delete(Long id) {
+        return productRepository.delete(id);
     }
 }

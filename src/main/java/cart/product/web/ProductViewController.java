@@ -16,7 +16,7 @@ public class ProductViewController {
         this.productService = productService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String showHomeView(Model model) {
         model.addAttribute("products", ProductHomeViewResponse.from(productService.findAll()));
         return "index";

@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProductControllerTest {
+public class ProductApiControllerTest {
 
     @LocalServerPort
     private int port;
@@ -195,18 +195,5 @@ public class ProductControllerTest {
             .extract();
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
-    }
-
-    @DisplayName("상품 삭제 할 때 해당 상품이 없는 경우 에러메시지를 반환한다.")
-    @Test
-    void deleteFalse() {
-        var result = given()
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .when()
-            .delete("/products/10")
-            .then()
-            .extract();
-
-        assertThat(result.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 }

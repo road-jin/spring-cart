@@ -1,4 +1,4 @@
-package cart.product.web;
+package cart.member.web;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -8,9 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import cart.global.WebConfig;
 import cart.global.authentication.AuthenticationArgumentResolver;
-import cart.product.application.ProductService;
+import cart.member.application.MemberService;
 import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,41 +19,28 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(ProductViewController.class)
-class ProductViewControllerTest {
+@WebMvcTest(SettingViewController.class)
+public class SettingViewControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ProductService productService;
+    private MemberService memberService;
 
     @MockBean
     private AuthenticationArgumentResolver argumentResolver;
 
-    @DisplayName("/ 경로로 접근하면 상품 목록을 조회하여 보여준다.")
-    @Test
-    void showHomePage() throws Exception {
-        given(productService.findAll()).willReturn(Collections.emptyList());
-
-        mockMvc.perform(get("/"))
-            .andExpect(view().name("index"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-            .andExpect(model().attributeExists("products"))
-            .andDo(print());
-    }
-
-    @DisplayName("/admin 경로로 접근하면 상품 목록을 조회하여 보여준다.")
+    @DisplayName("/settings 경로로 접근하면 사용자 목록을 조회하여 보여준다.")
     @Test
     void showAdminView() throws Exception {
-        given(productService.findAll()).willReturn(Collections.emptyList());
+        given(memberService.findAll()).willReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/admin"))
-            .andExpect(view().name("admin"))
+        mockMvc.perform(get("/settings"))
+            .andExpect(view().name("settings"))
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-            .andExpect(model().attributeExists("products"))
+            .andExpect(model().attributeExists("members"))
             .andDo(print());
     }
 }
